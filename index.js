@@ -52,9 +52,6 @@ function SubwaySurfersSidebar() {
   const startSec = useMemo(() => pickRandomStart(), []);
   const [src] = useState(() => buildEmbedUrl(startSec));
 
-  const startMin = Math.round(startSec / 60);
-  const label = startMin === 0 ? "from the top" : "+" + startMin + "m in";
-
   return h(
     "div",
     {
@@ -87,29 +84,6 @@ function SubwaySurfersSidebar() {
         display: "block",
       },
     }),
-    h(
-      "div",
-      {
-        style: {
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          padding: "6px 10px",
-          fontSize: "11px",
-          fontWeight: 500,
-          color: "#fff",
-          background: "linear-gradient(transparent, rgba(0,0,0,0.55))",
-          letterSpacing: "0.04em",
-          pointerEvents: "none",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        },
-      },
-      h("span", null, "Subway Surfers"),
-      h("span", { style: { opacity: 0.75 } }, label),
-    ),
   );
 }
 
@@ -122,6 +96,7 @@ export function activate(api) {
       label: "Subway Surfers",
       render: SubwaySurfersSidebar,
       order: 100,
+      side: "right",
     }),
   );
 
