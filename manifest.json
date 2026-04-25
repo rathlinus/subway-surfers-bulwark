@@ -1,7 +1,7 @@
 {
   "id": "subway-surfers",
   "name": "Subway Surfers",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Bulwark Mail Community",
   "description": "Writing emails is boring - it doesn't have to be. Adds a Subway Surfers sidebar to the New Message dialog, picking a random 6-minute jump-in point from a one-hour gameplay video.",
   "type": "ui-extension",
