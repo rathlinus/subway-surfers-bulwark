@@ -27,6 +27,16 @@ function buildEmbedUrl(startSec) {
     controls: "1",
     iv_load_policy: "3",
   });
+  // YouTube needs a valid origin to authorise the embed; otherwise the
+  // player aborts with "Error 153 - Fehler bei der Konfiguration des
+  // Videoplayers". Fall back to the embed host itself when we are not
+  // running in a browser context (SSR / tests).
+  const origin =
+    (typeof window !== "undefined" &&
+      window.location &&
+      window.location.origin) ||
+    "https://www.youtube-nocookie.com";
+  params.set("origin", origin);
   // Privacy-enhanced embed host - no tracking cookies until interaction.
   return (
     "https://www.youtube-nocookie.com/embed/" +
@@ -74,7 +84,9 @@ function SubwaySurfersSidebar() {
       title: "Subway Surfers - gameplay",
       allow: "autoplay; encrypted-media; picture-in-picture",
       allowFullScreen: true,
-      referrerPolicy: "no-referrer",
+      // Must send the origin so YouTube can verify the embed; using
+      // "no-referrer" triggers playback error 153.
+      referrerPolicy: "strict-origin-when-cross-origin",
       loading: "lazy",
       style: {
         width: "100%",
